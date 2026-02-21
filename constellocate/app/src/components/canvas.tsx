@@ -1,3 +1,4 @@
+import Button from "@/app/components/ui/Button";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 export default function Canvas() {
@@ -119,7 +120,7 @@ export default function Canvas() {
             <div ref={containerRef} className="relative cursor-crosshair overflow-hidden h-screen">
                 <canvas 
                     ref={canvasRef}
-                    className="absolute inset-0 w-full h-full"
+                    className="absolute inset-0 w-full h-full z-10"
                     onMouseDown={handleStart}
                     onMouseMove={handleMove}
                     onMouseUp={handleEnd}
@@ -130,6 +131,14 @@ export default function Canvas() {
                     style={{ touchAction: "none" }}
                     >
                 </canvas>
+                <div className = "grid grid-cols-3 w-full gap-4 py-4 px-4">
+                    <Button text={'Submit'} onClick={() => (window.location.href = '/load-page')}
+                    className="w-full h-full bg-white text-black rounded-lg" />
+                    <Button text={'Undo'} 
+                    className="w-full h-full bg-white text-black rounded-lg" />
+                    <Button text={'Clear'}
+                    className="w-full h-full bg-white text-black rounded-lg" />
+                </div>
             </div>
         </div>
     )
