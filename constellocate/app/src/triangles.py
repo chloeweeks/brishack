@@ -2,6 +2,8 @@ from scipy.spatial import KDTree
 import numpy as np
 import itertools
 import pandas as pd
+from collections import Counter
+from skimage.transform import SimilarityTransform
 # from parse.py import get_clean_star_database_2D
 
 def generateTriangles(df, num_neighbours=10):
@@ -52,3 +54,76 @@ def generateTriangles(df, num_neighbours=10):
 
     print(cluster)
 
+
+def searchTriangles(userVertices, starDb, starTriangleDb, ratioTolerance=0.01, physicalTolerance=0.1):
+    
+    #builds a tree for finding similar shape ratios
+    databaseRatios = np.column_stack((starTriangleDb['ratio1'], starTriangleDb['ratio2']))
+    ratioTree = KDTree(databaseRatios)
+    
+    # compares the tree locations to real places on the map
+    starCoords = np.column_stack((starDb['x_coord'], starDb['y_coord']))
+    skyMapTree = KDTree(starCoords)
+    starHipsArray = starDb['HIP'].values # Fast lookup array
+    
+    # convert user points
+    userPoints = np.array(userVertices)
+    numPoints = len(userPoints)
+    
+    # get indices of the user data points
+    pointIndices = list(range(numPoints))
+    
+    # Generate Triangles from the drawing
+    for combo in itertools.combinations(pointIndices, 3):
+        idx1, idx2, idx3 = combo
+        p1, p2, p3 = userPoints[idx1], userPoints[idx2], userPoints[idx3]
+        
+        #lengths
+        L1 = np.linalg.norm(p1 - p2)
+        L2 = np.linalg.norm(p2 - p3)
+        L3 = np.linalg.norm(p3 - p1)
+        
+        sides = sorted([L1, L2, L3])
+        if sides[2] == 0: continue
+            
+        userRatio1 = sides[0] / sides[2]
+        userRatio2 = sides[1] / sides[2]
+        
+        # find similar ratios
+        matches = ratioTree.query_ball_point([userRatio1, userRatio2], r=ratioTolerance)
+        
+        # now compare using "anchor" of matching index and looks to see if the other coords match
+        for matchId in matches:
+            match = starTriangleDb.iloc[matchId]
+            
+            anchorHips = [match['hip1'], match['hip2'], match['hip3']]
+            
+            anchorStarsCoords = starDb[starDb['HIP'].isin(anchorHips)][['x_coord', 'y_coord']].values
+            
+            if len(anchorStarsCoords) != 3: continue
+                
+            # see how much it takes to transform real points to user points
+            tform = SimilarityTransform()
+            userAnchorPoints = np.array([p1, p2, p3])
+            tform.estimate(userAnchorPoints, anchorStarsCoords) 
+
+            #now apply that same transformation to every other drawn point, and see if they map to real stars in the map
+            projection = tform(userPoints)
+            
+            # query() returns the distance to the nearest star and the index of that star
+            distances, closestIndices = skyMapTree.query(projection)
+            
+            # checks if all points land within physical tolerance
+            validHits = np.sum(distances < physicalTolerance)
+            
+            if validHits == numPoints: 
+                #FOUND
+                winningHIPS = starHipsArray[closestIndices]
+
+                if len(set(winningHIPS)) == numPoints:
+                
+                    print("Found a win!!!!")
+                    print(winningHIPS.tolist())
+                    return winningHIPS.tolist()
+                
+    return None
