@@ -55,19 +55,19 @@ async function handleSubmit(points: Point[]) {
               <Button
                 text="Star 1"
                 onClick={() => setShowButtons(false)}
-                className="font-semibold cursor-pointer whitespace-nowrap flex h-[90%] w-full items-center justify-center gap-2 rounded-xl px-5 text-background transition-colors hover:bg-gray-300 bg-white hover:shadow-[0_0_35px_rgba(99,102,241,1)]"
+                className="font-semibold cursor-pointer whitespace-nowrap flex h-[90%] w-full text-black items-center justify-center gap-2 rounded-xl px-5 text-background transition-colors hover:bg-gray-300 bg-white hover:shadow-[0_0_35px_rgba(99,102,241,1)]"
               />
 
               <Button
                 text="Star 2"
                 onClick={() => setShowButtons(false)}
-                className="font-semibold cursor-pointer whitespace-nowrap flex h-[90%] w-full items-center justify-center gap-2 rounded-xl px-5 text-background transition-colors hover:bg-gray-300 bg-white hover:shadow-[0_0_35px_rgba(99,102,241,1)]"
+                className="font-semibold cursor-pointer whitespace-nowrap flex h-[90%] w-full text-black items-center justify-center gap-2 rounded-xl px-5 text-background transition-colors hover:bg-gray-300 bg-white hover:shadow-[0_0_35px_rgba(99,102,241,1)]"
               />
 
               <Button
                 text="Star 3"
                 onClick={() => setShowButtons(false)}
-                className="font-semibold cursor-pointer whitespace-nowrap flex h-[90%] w-full items-center justify-center gap-2 rounded-xl px-5 text-background transition-colors hover:bg-gray-300 bg-white hover:shadow-[0_0_35px_rgba(99,102,241,1)]"
+                className="font-semibold cursor-pointer whitespace-nowrap flex h-[90%] w-full text-black items-center justify-center gap-2 rounded-xl px-5 text-background transition-colors hover:bg-gray-300 bg-white hover:shadow-[0_0_35px_rgba(99,102,241,1)]"
               />
               </div>
           ) : (
@@ -96,7 +96,7 @@ async function handleSubmit(points: Point[]) {
               <Button
                 text="See my stars"
                 onClick={() => setShowButtons(true)}
-                className="font-semibold cursor-pointer whitespace-nowrap flex h-[60px] w-full items-center justify-center gap-2 rounded-xl px-5 text-background transition-colors hover:bg-gray-300 bg-white hover:shadow-[0_0_35px_rgba(99,102,241,1)]"
+                className="font-semibold cursor-pointer whitespace-nowrap flex h-[60px] w-full text-black items-center justify-center gap-2 rounded-xl px-5 text-background transition-colors hover:bg-gray-300 bg-white hover:shadow-[0_0_35px_rgba(99,102,241,1)]"
               />
             </div>
             </>
