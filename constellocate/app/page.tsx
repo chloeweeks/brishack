@@ -13,9 +13,9 @@ export default function Home() {
         
         <div className="flex flex-col items-center gap-6 text-center">
           <h1 className="items-center text-4xl font-semibold leading-10 tracking-tight text-white">
-             CONSTELLOCATE 
+             Constellocate 
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-300">
+          <p className="max-w-md text-lg leading-8 text-zinc-300 font-semibold">
             Start doodling and see which stars make up your drawing!
           </p>
         </div>
