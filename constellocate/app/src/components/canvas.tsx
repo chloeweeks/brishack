@@ -153,7 +153,11 @@ export default function Canvas() {
                             await writeVertices();
                             setLoading(false);
                             }}/>
-                        <Button text={'Undo'} />
+                        <Button text="Undo"
+                        onClick={() => {
+                            setPaths(prev => prev.slice(0, -1));
+                        }}
+                        />
                         <Button text="Clear"
                             onClick={() => {
                             const canvas = canvasRef.current;
