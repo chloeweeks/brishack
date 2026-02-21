@@ -92,7 +92,6 @@ def starSearch(userVertices, tolerance = 0.005):
     foundStars = searchTriangles(userVertices, stars2d, starTriangles)
 
     if foundStars:
-       if foundStars:
 
         for i, match in enumerate(foundStars):
             hips_to_plot = match['hips']
