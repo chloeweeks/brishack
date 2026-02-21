@@ -12,12 +12,13 @@ export default function Home() {
       <main className="relative z-10 flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-40 px-16">
         
         <div className="flex flex-col items-center gap-6 text-center">
+          <img src="/Constellocate logo.png" width="400"></img>
           <h1 className="items-center text-4xl font-semibold leading-10 tracking-tight text-white">
-             Constellocate 
+            Start doodling and see which stars make up your drawing! 
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-300 font-semibold">
+          {/* <p className="max-w-md text-lg leading-8 text-zinc-300 font-semibold">
             Start doodling and see which stars make up your drawing!
-          </p>
+          </p> */}
         </div>
         <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
     
