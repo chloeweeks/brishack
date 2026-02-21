@@ -5,6 +5,8 @@ import numpy as np
 
 def plotSky(inputCoords):
 
+    n = str(inputCoords).strip("(), ")
+
     # 1. Load your clean database
     df = pd.read_csv('app_star_database.csv', skiprows=[1, 2])
 
@@ -66,7 +68,7 @@ def plotSky(inputCoords):
     plt.grid(True, linestyle=':', alpha=0.3, color='white')
 
     # Save it as an image file
-    plt.savefig('constellation_map.png', bbox_inches='tight')
+    plt.savefig(f'maps/constellation_map {n}.png', bbox_inches='tight')
     print("Successfully generated constellation map!")
 
     plt.show()

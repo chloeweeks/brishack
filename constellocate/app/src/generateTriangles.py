@@ -10,9 +10,10 @@ def parse_hipparcos(file_path):
     star_db = star_db.dropna()
     # if want to make only for visible stars:
     # star_db['Vmag'] = pd.to_numeric(star_db['Vmag'])
+    star_db['Vmag'] = pd.to_numeric(star_db['Vmag'], errors='coerce')
 
-    # visible_stars = star_db[star_db['Vmag'] <= 6.0]
-    return star_db
+    visibleStars = star_db[star_db['Vmag'] <= 6.0]
+    return visibleStars
 
 
 def project_stars_to_2d(ra_star, dec_star, ra_center, dec_center):
@@ -49,6 +50,10 @@ def generate():
     clean_star_database['x_coord'], clean_star_database['y_coord'] = project_stars_to_2d(clean_star_database['RAICRS'], clean_star_database['DEICRS'], ra_center=84, dec_center=-1)
 
     print("Stars successfully projected to 2D!")
+
+    clean_star_database.to_csv('2D_app_star_database.csv', index=False)
+
+    print("Saved 2d database successfully!")
     # clean_star_database.to_csv('2D_app_star_database.csv', index=False)
 
 

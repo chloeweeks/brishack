@@ -55,7 +55,7 @@ def generateTriangles(df, num_neighbours=10):
     print(cluster)
 
 
-def searchTriangles(userVertices, starDb, starTriangleDb, ratioTolerance=0.01, physicalTolerance=0.1):
+def searchTriangles(userVertices, starDb, starTriangleDb, ratioTolerance=0.01, physicalTolerance=0.1, topN=3):
     
     #builds a tree for finding similar shape ratios
     databaseRatios = np.column_stack((starTriangleDb['ratio1'], starTriangleDb['ratio2']))
@@ -72,9 +72,15 @@ def searchTriangles(userVertices, starDb, starTriangleDb, ratioTolerance=0.01, p
     
     # get indices of the user data points
     pointIndices = list(range(numPoints))
+
+    foundMatches = []
+    seenConstellations = set()
+    breaking = False
     
     # Generate Triangles from the drawing
     for combo in itertools.combinations(pointIndices, 3):
+        if breaking:
+            break
         idx1, idx2, idx3 = combo
         p1, p2, p3 = userPoints[idx1], userPoints[idx2], userPoints[idx3]
         
@@ -121,9 +127,32 @@ def searchTriangles(userVertices, starDb, starTriangleDb, ratioTolerance=0.01, p
                 winningHIPS = starHipsArray[closestIndices]
 
                 if len(set(winningHIPS)) == numPoints:
+
+                    sortedHIPS = tuple(sorted(winningHIPS.tolist()))
+
+                    if sortedHIPS not in seenConstellations:
+                        # print("Found a win!!!!")
+                        # print(winningHIPS.tolist())
+                        seenConstellations.add(sortedHIPS)
+
+                        vmag = starDb[starDb['HIP'].isin(sortedHIPS)]['Vmag'].mean() #gives avg brightness
                 
-                    print("Found a win!!!!")
-                    print(winningHIPS.tolist())
-                    return winningHIPS.tolist()
-                
-    return None
+                        foundMatches.append({
+                            "hips": winningHIPS.tolist(),
+                            "averageVmag": vmag
+                        })
+
+                        if len(foundMatches) > 100:
+                            breaking = True
+                            break
+                    # else: print("Found a duplicate")
+
+                    
+                    # return winningHIPS.tolist()
+    if not foundMatches:            
+        return "No matches found"
+    foundMatches = sorted(foundMatches, key=lambda x : x["averageVmag"])
+
+    print(foundMatches[:topN])
+
+    return foundMatches[:topN]
