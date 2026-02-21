@@ -131,13 +131,12 @@ export default function Canvas() {
                     style={{ touchAction: "none" }}
                     >
                 </canvas>
-                <div className = "grid grid-cols-3 w-full gap-4 py-4 px-4">
-                    <Button text={'Submit'} onClick={() => (window.location.href = '/load-page')}
-                    className="w-full h-full bg-white text-black rounded-lg" />
-                    <Button text={'Undo'} 
-                    className="w-full h-full bg-white text-black rounded-lg" />
-                    <Button text={'Clear'}
-                    className="w-full h-full bg-white text-black rounded-lg" />
+                <div className="flex min-h-screen flex-col">
+                    <div className = "mt-auto pb-2 relative z-10 grid grid-cols-3 gap-5 mx-auto ">
+                        <Button text={'Submit'} onClick={() => (window.location.href = '/load-page')} />
+                        <Button text={'Undo'}  />
+                        <Button text={'Clear'} />
+                    </div>
                 </div>
             </div>
         </div>
