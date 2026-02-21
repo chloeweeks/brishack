@@ -26,17 +26,31 @@ async function writeVertices(vertices: Point[]) {
 
 async function handleSubmit(points: Point[]) {
   const vertices = calcVertices(points);
-  console.log(vertices);
   writeVertices(vertices);
+  
+  const res = await fetch("/api/stars", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      vertices: vertices,
+    }),
+  });
+
+  const data = await res.json() as {star: string, pos: {x: number, y: number}}[];
+  console.log(data);
+
+  return data;
 }
 
   return (
     /*splitting into two rows */
     <div className="grid grid-cols-[70%_30%] h-screen bg-black">
-      
-      {/* LEFT COLUMN */}
-      <div className="grid grid-rows-[80%_20%] border-r border-white">
+    
+      {/* Left column */}
+      {/* Right column split into 2 rows */}
+      <div className="relative grid grid-rows-[80%_20%] border-r border-white">
         <StarfieldBackground/>
+        
         <Canvas onSubmit={handleSubmit}/>
       </div>
 

@@ -1,3 +1,5 @@
+import os
+
 import pandas as pd
 import numpy as np
 from triangles import generateTriangles
@@ -32,7 +34,8 @@ def project_stars_to_2d(ra_star, dec_star, ra_center, dec_center):
 
 def generate():
 
-    raw_data_file = '../../resources/asu.tsv'
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    raw_data_file = os.path.join(BASE_DIR, "app_star_database.csv")
     clean_star_database = parse_hipparcos(raw_data_file)
 
     # print(f"Total visible stars for the app: {len(clean_star_database)}")
@@ -49,11 +52,11 @@ def generate():
 
     clean_star_database['x_coord'], clean_star_database['y_coord'] = project_stars_to_2d(clean_star_database['RAICRS'], clean_star_database['DEICRS'], ra_center=84, dec_center=-1)
 
-    print("Stars successfully projected to 2D!")
+    # print("Stars successfully projected to 2D!")
 
     clean_star_database.to_csv('2D_app_star_database.csv', index=False)
 
-    print("Saved 2d database successfully!")
+    # print("Saved 2d database successfully!")
     # clean_star_database.to_csv('2D_app_star_database.csv', index=False)
 
 
@@ -62,11 +65,11 @@ def generate():
 
     # print("Saved 2d database successfully!")
 
-    print("Generating triangles (could take a while)")
+    # print("Generating triangles (could take a while)")
 
     triangle_db = generateTriangles(clean_star_database)
 
-    print(f"Successfully generated {len(triangle_db)} unique triangles!")
+    # print(f"Successfully generated {len(triangle_db)} unique triangles!")
 
     triangle_db.to_csv('star_triangle_hash_table.csv', index=False)
 
