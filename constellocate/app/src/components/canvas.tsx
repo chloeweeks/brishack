@@ -19,6 +19,18 @@ export default function Canvas() {
         }
     }
 
+    const writeVertices = async () => {
+        const res = await fetch('/api/vertices', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(vertices),
+        });
+
+        if (!res.ok) {
+            console.log('Error');
+        }
+    }
+
     useEffect(() => {
     const container = containerRef.current
     const canvas = canvasRef.current
@@ -132,7 +144,10 @@ export default function Canvas() {
                     >
                 </canvas>
                 <div className = "grid grid-cols-3 w-full gap-4 py-4 px-4">
-                    <Button text={'Submit'} onClick={() => (window.location.href = '/load-page')}
+                    <Button text={'Submit'} onClick={async () => {
+                        calcVertices();
+                        await writeVertices();
+                        window.location.href = '/load-page'}}
                     className="w-full h-full bg-white text-black rounded-lg" />
                     <Button text={'Undo'} 
                     className="w-full h-full bg-white text-black rounded-lg" />
