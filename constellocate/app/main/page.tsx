@@ -36,10 +36,10 @@ async function handleSubmit(points: Point[]) {
     }),
   });
 
-  const data = await res.json() as {star: string, pos: {x: number, y: number}}[];
+  const data = await res.json() as {hips: number[], averageVmag: number}[];
   console.log(data);
 
-  return data;
+  return { hips: data[0].hips, vertices: vertices };
 }
 
   return (

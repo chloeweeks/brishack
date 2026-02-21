@@ -2,9 +2,10 @@ import Button from "@/app/components/ui/Button";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Point } from "../lib/douglas-peucker";
+import Constellation from "./constellation-viewer";
 
 interface canvasProps {
-    onSubmit: (vertices: Point[]) => Promise<{star: string, pos: {x: number, y: number}}[]>
+    onSubmit: (vertices: Point[]) => Promise<{hips: number[], vertices: Point[]}>
 }
 
 export default function Canvas({ onSubmit } : canvasProps) {
@@ -16,7 +17,8 @@ export default function Canvas({ onSubmit } : canvasProps) {
     const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 })
     const [brushSize] = useState(3)
     const [isLoading, setLoading] = useState<boolean>(false);
-    const [constellation, setConstellation] = useState<{star: string, pos: {x: number, y: number}}[]>([]);
+    const [constellation, setConstellation] = useState<{hips: number[], vertices: Point[]}>({hips: [], vertices: []});
+    const [isConstellation, setIsConstellation] = useState<boolean>(false);
 
 
     useEffect(() => {
@@ -117,7 +119,7 @@ export default function Canvas({ onSubmit } : canvasProps) {
 
     return (
         <div>
-            {!isLoading ? (
+            {!isLoading && !isConstellation ? (
             <div ref={containerRef} className="relative cursor-crosshair overflow-hidden h-screen">
                 <canvas 
                     ref={canvasRef}
@@ -138,9 +140,8 @@ export default function Canvas({ onSubmit } : canvasProps) {
                             setLoading(true);
                             const stars = await onSubmit(paths.flat());
                             setConstellation(stars);
+                            setIsConstellation(true);
                             setLoading(false);
-             
-                           
                         }} />
                     
                         <Button text="Undo"
@@ -167,7 +168,7 @@ export default function Canvas({ onSubmit } : canvasProps) {
             </div>
             
             
-            ) : (
+            ) : ( isLoading && !isConstellation ? (
                 <main className="flex flex-col items-center justify-center gap-6 relative z-50">
                 {/* UIverse Loader */}
                 <div className="container">
@@ -216,8 +217,9 @@ export default function Canvas({ onSubmit } : canvasProps) {
                 Loading your constillations...
                 </h1>
             </main>
-                // <Image src={constellationMap} alt="Constellation Map" fill/>
-        
+            ) : (
+                <Constellation stars={constellation}/>
+            )
             )}
         </div>
     )
