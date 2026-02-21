@@ -19,7 +19,7 @@ export default function Credits() {
             <img src="katie.jpeg" className="w-40 h-auto"></img>
             <img src="jake.jpeg" className="w-40 h-auto"></img>
             <img src="chloe.jpeg" className="w-40 h-auto"></img>
-            <img src="max.jpeg" className="w-40 h-auto"></img>
+            <img src="max.jpeg" className="w-40 h-40"></img>
             <img src="ritika.jpeg" className="w-40 h-auto"></img>
         </div>
         </div>

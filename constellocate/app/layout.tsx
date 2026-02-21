@@ -20,7 +20,6 @@ const playfairDisplay = Playfair_Display({
 
 export const metadata: Metadata = {
   title: "Constellocate",
-  description: "Create a new constellation",
 };
 
 export default function RootLayout({
