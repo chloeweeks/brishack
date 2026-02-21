@@ -1,0 +1,2 @@
+*.csv filter=lfs diff=lfs merge=lfs -text
+star_triangle_hash_table.csv filter=lfs diff=lfs merge=lfs -text

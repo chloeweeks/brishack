@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from triangles import generateTriangles
 
 
 def parse_hipparcos(file_path):
@@ -54,4 +55,16 @@ clean_star_database['x_coord'], clean_star_database['y_coord'] = project_stars_t
 print("Stars successfully projected to 2D!")
 clean_star_database.to_csv('2D_app_star_database.csv', index=False)
 
+
+# def get_clean_star_database_2D():
+#     return clean_star_database
+
 print("Saved 2d database successfully!")
+
+
+
+triangle_db = generateTriangles(clean_star_database)
+
+print(f"Successfully generated {len(triangle_db)} unique triangles!")
+
+triangle_db.to_csv('star_triangle_hash_table.csv', index=False)
