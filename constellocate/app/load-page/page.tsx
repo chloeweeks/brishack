@@ -1,11 +1,13 @@
+import { StarfieldBackground } from "../src/components/star-background";
+
 export default function Home() {
   return (
     <div
       className="min-h-screen w-full flex items-center justify-center bg-cover bg-center bg-no-repeat relative"
-      style={{ backgroundImage: "url('/background.png')" }}
     >
-      <main className="flex flex-col items-center justify-center gap-6 relative z-50">
+      <StarfieldBackground />
 
+      <main className="flex flex-col items-center justify-center gap-6 relative z-50">
         {/* UIverse Loader */}
         <div className="container">
           <div className="moon">
