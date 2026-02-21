@@ -31,6 +31,7 @@ async function handleSubmit(points: Point[]) {
 }
 
   return (
+    /*splitting into two rows */
     <div className="grid grid-cols-[70%_30%] h-screen bg-black">
       
       {/* LEFT COLUMN */}
@@ -40,7 +41,7 @@ async function handleSubmit(points: Point[]) {
       </div>
 
       {/* RIGHT COLUMN */}
-      <div className="relative z-10 border-l border-white place-items-center">
+      <div className="relative border-l border-white place-items-center">
         <h1 className="text-2xl text-center font-semibold tracking-tight text-white">
           matches:
         </h1>
@@ -49,23 +50,24 @@ async function handleSubmit(points: Point[]) {
 
           {showButtons ? (
             /* SHOW THE 3 BUTTONS */
-           <div className="grid grid-rows-3 h-full w-full flex items-center justify-center py-2">
+           <div className="grid grid-rows-3 h-full w-[90%] align-center mx-auto">  
+         
               <Button
                 text="Star 1"
                 onClick={() => setShowButtons(false)}
-                className="font-semibold cursor-pointer whitespace-nowrap flex h-[90%] w-[90%] items-center justify-center gap-2 rounded-xl px-5 text-background transition-colors hover:bg-gray-300 bg-white hover:shadow-[0_0_35px_rgba(99,102,241,1)]"
+                className="font-semibold cursor-pointer whitespace-nowrap flex h-[90%] w-full items-center justify-center gap-2 rounded-xl px-5 text-background transition-colors hover:bg-gray-300 bg-white hover:shadow-[0_0_35px_rgba(99,102,241,1)]"
               />
 
               <Button
                 text="Star 2"
                 onClick={() => setShowButtons(false)}
-                className="font-semibold cursor-pointer whitespace-nowrap flex h-[90%] w-[90%] items-center justify-center gap-2 rounded-xl px-5 text-background transition-colors hover:bg-gray-300 bg-white hover:shadow-[0_0_35px_rgba(99,102,241,1)]"
+                className="font-semibold cursor-pointer whitespace-nowrap flex h-[90%] w-full items-center justify-center gap-2 rounded-xl px-5 text-background transition-colors hover:bg-gray-300 bg-white hover:shadow-[0_0_35px_rgba(99,102,241,1)]"
               />
 
               <Button
                 text="Star 3"
                 onClick={() => setShowButtons(false)}
-                className="font-semibold cursor-pointer whitespace-nowrap flex h-[90%] w-[90%] items-center justify-center gap-2 rounded-xl px-5 text-background transition-colors hover:bg-gray-300 bg-white hover:shadow-[0_0_35px_rgba(99,102,241,1)]"
+                className="font-semibold cursor-pointer whitespace-nowrap flex h-[90%] w-full items-center justify-center gap-2 rounded-xl px-5 text-background transition-colors hover:bg-gray-300 bg-white hover:shadow-[0_0_35px_rgba(99,102,241,1)]"
               />
               </div>
           ) : (
