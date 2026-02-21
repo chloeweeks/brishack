@@ -62,9 +62,18 @@ from plotSky import plotSky
 # foundStars = searchTriangles(userVertices, stars2d, starTriangles)
 
 # if foundStars:
-#     plotSky(foundStars)
+#     for element in foundStars:
+#         plotSky(foundStars)
 
+# if foundStars:
 
+#     for i, match in enumerate(foundStars):
+#         hips_to_plot = match['hips']
+#         vmag = match['averageVmag']
+        
+#         print(f"Match {i+1}: Brightness = {vmag:.2f}")
+
+#         plotSky(hips_to_plot)
 
 
 # results are shown
@@ -83,7 +92,15 @@ def starSearch(userVertices, tolerance = 0.005):
     foundStars = searchTriangles(userVertices, stars2d, starTriangles)
 
     if foundStars:
-        plotSky(foundStars)
+       if foundStars:
+
+        for i, match in enumerate(foundStars):
+            hips_to_plot = match['hips']
+            vmag = match['averageVmag']
+            
+            # print(f"Match {i+1}: Brightness = {vmag:.2f}")
+
+            plotSky(hips_to_plot)
 
     return foundStars
 

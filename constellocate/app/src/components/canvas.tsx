@@ -18,6 +18,7 @@ export default function Canvas({ onSubmit } : canvasProps) {
     const [isLoading, setLoading] = useState<boolean>(false);
     const [constellation, setConstellation] = useState<{star: string, pos: {x: number, y: number}}[]>([]);
 
+
     useEffect(() => {
     const container = containerRef.current
     const canvas = canvasRef.current
@@ -138,17 +139,34 @@ export default function Canvas({ onSubmit } : canvasProps) {
                             const stars = await onSubmit(paths.flat());
                             setConstellation(stars);
                             setLoading(false);
-                        }}/>
-                        <Button text={'Undo'} onClick={() => {
-                            setPaths((prev) => prev.slice(0, -1));
-                        }}/>
-                        <Button text={'Clear'} onClick={() => {
+             
+                           
+                        }} />
+                    
+                        <Button text="Undo"
+                        onClick={() => {
+                            setPaths(prev => prev.slice(0, -1));
+                        }}
+                        />
+                        <Button text="Clear"
+                            onClick={() => {
+                            const canvas = canvasRef.current;
+                            if (!canvas) return;
+
+                            const ctx = canvas.getContext("2d");
+                            if (!ctx) return;
+
+                            ctx.clearRect(0, 0, canvas.width, canvas.height);
                             setPath([]);
                             setPaths([]);
-                        }}/>
+                        }}
+/>
                     </div>
                 </div>
+                  
             </div>
+            
+            
             ) : (
                 <main className="flex flex-col items-center justify-center gap-6 relative z-50">
                 {/* UIverse Loader */}
@@ -204,6 +222,7 @@ export default function Canvas({ onSubmit } : canvasProps) {
         </div>
     )
 }
+
 
 function drawPath(
   ctx: CanvasRenderingContext2D,

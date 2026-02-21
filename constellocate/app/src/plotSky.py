@@ -7,6 +7,8 @@ import numpy as np
 
 def plotSky(inputCoords):
 
+    n = str(inputCoords).strip("(), ")
+
     # 1. Load your clean database
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     raw_data_file = os.path.join(BASE_DIR, "app_star_database.csv")
@@ -73,4 +75,4 @@ def plotSky(inputCoords):
     plt.savefig('constellation_map.png', bbox_inches='tight')
     # print("Successfully generated constellation map!")
 
-    plt.show()
+    # plt.show()
