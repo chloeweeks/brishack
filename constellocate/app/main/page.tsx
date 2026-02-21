@@ -55,7 +55,7 @@ async function handleSubmit(points: Point[]) {
       </div>
 
       {/* RIGHT COLUMN */}
-      <div className="relative border-l border-white place-items-center">
+      <div className="relative place-items-center">
         <h1 className="text-2xl text-center font-semibold tracking-tight text-white">
           matches:
         </h1>

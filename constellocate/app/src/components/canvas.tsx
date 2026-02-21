@@ -135,7 +135,7 @@ export default function Canvas({ onSubmit } : canvasProps) {
                     >
                 </canvas>
                 <div className="flex min-h-screen flex-col">
-                    <div className = "mt-auto pb-2 relative z-10 grid grid-cols-3 gap-5 mx-auto ">
+                    <div className = "mt-auto pb-2 relative z-10 grid grid-cols-4 gap-5 mx-auto ">
                         <Button text={'Submit'} onClick={async () => {
                             setLoading(true);
                             const stars = await onSubmit(paths.flat());
@@ -161,7 +161,9 @@ export default function Canvas({ onSubmit } : canvasProps) {
                             setPath([]);
                             setPaths([]);
                         }}
-/>
+                        />
+                        <Button text={'Back'} onClick={() => (window.location.href = '/')} />
+
                     </div>
                 </div>
                   
