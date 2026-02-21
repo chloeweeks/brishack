@@ -24,7 +24,7 @@ export default function Home() {
         </h1>
 
         {/* Left column */}
-        <div className="w-80 h-140 bg-white rounded-2xl flex flex-col text-black mx-auto">
+        <div className="w-[80%] h-[70%] bg-white rounded-2xl flex flex-col text-black mx-auto">
           <h1 className = "text-2xl align-top font-bold text-black py-2 px-2">
           Star Name: 
           </h1>
