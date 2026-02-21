@@ -12,7 +12,7 @@ export default function Canvas() {
 
     const calcVertices = () => {
         for (let i: number = 0; i < paths.length; i++) {
-            for (let j: number = 0; j < paths[i].length; j + 10) {
+            for (let j: number = 0; j < paths[i].length; j += 10) {
                 setVertices((prev) => [...prev, paths[i][j]]);
             }
         }
