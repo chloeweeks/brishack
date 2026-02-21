@@ -16,6 +16,10 @@ export default function Canvas({ onSubmit } : canvasProps) {
     const [brushSize] = useState(3)
     const [isLoading, setLoading] = useState<boolean>(false);
 
+
+    const [showSummary, setShowSummary] = useState(false);
+    const [summary, setSummary] = useState<string>("");
+
     useEffect(() => {
     const container = containerRef.current
     const canvas = canvasRef.current
@@ -135,7 +139,22 @@ export default function Canvas({ onSubmit } : canvasProps) {
                             setLoading(true);
                             onSubmit(paths.flat());
                             setLoading(false);
-                        }}/>
+                            setSummary("What an interesting constellation...");
+                            setShowSummary(true);
+
+                            //API for summary
+                            try {
+                               
+                                const res = await fetch("/api/vertices/summary", { method: "POST" });
+                                const data = await res.json();
+
+                                setSummary(data.summary ?? "No summary returned.");
+                            } catch {
+                                setSummary("The stars went quiet for a moment. Try again.");
+                            } 
+                           
+                        }} />
+                    
                         <Button text={'Undo'} onClick={() => {
                             setPaths((prev) => prev.slice(0, -1));
                         }}/>
@@ -145,7 +164,22 @@ export default function Canvas({ onSubmit } : canvasProps) {
                         }}/>
                     </div>
                 </div>
+                  { showSummary && (
+                    
+                        <div className="fixed top-6 left-6 z-50 w-[380px] h-[120px] rounded-xl bg-white">
+                            
+                            <p className="p-2 text-black">
+                               🔮  {summary} 
+                            </p>
+
+                            
+                        </div>
+                       
+                )}
+                
             </div>
+            
+            
             ) : (
                 <main className="flex flex-col items-center justify-center gap-6 relative z-50">
                 {/* UIverse Loader */}
