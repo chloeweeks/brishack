@@ -24,6 +24,7 @@ export default function Home() {
     
          <Button text={'Find Your Match'} onClick={() => (window.location.href = '/main')} />
          <Button text={'Need Help?'} onClick={() => (window.location.href = '/help')} />
+         <Button text={'Credits'} onClick={() => (window.location.href = '/credits')} />
         </div>
       </main>
     </div>
