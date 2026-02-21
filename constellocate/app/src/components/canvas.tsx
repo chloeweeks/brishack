@@ -6,16 +6,29 @@ export default function Canvas() {
     const containerRef = useRef<HTMLDivElement>(null)
     const [path, setPath] = useState<{x: number, y: number}[]>([]);
     const [paths, setPaths] = useState<{x: number, y: number}[][]>([]);
-    const [isDrawing, setIsDrawing] = useState<boolean>(false);
+    const [isDrawing, setDrawing] = useState<boolean>(false);
     const [vertices, setVertices] = useState<{x: number, y: number}[]>([]);
     const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 })
     const [brushSize] = useState(3)
+    const [isLoading, setLoading] = useState<boolean>(false);
 
     const calcVertices = () => {
         for (let i: number = 0; i < paths.length; i++) {
             for (let j: number = 0; j < paths[i].length; j += 10) {
                 setVertices((prev) => [...prev, paths[i][j]]);
             }
+        }
+    }
+
+    const writeVertices = async () => {
+        const res = await fetch('/api/vertices', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(vertices),
+        });
+
+        if (!res.ok) {
+            console.log('Error');
         }
     }
 
@@ -98,14 +111,14 @@ export default function Canvas() {
             e.preventDefault();
             const point = getCanvasPoint(e);
             if (!point) return;
-            setIsDrawing(true);
+            setDrawing(true);
             setPath([point]);
         }, [getCanvasPoint]
     );
 
     const handleEnd = useCallback(() => {
         if (!isDrawing) return;
-        setIsDrawing(false);
+        setDrawing(false);
         // Add current path to paths list
         if (path.length > 1) {
             setPaths((prev) => [...prev, path])
@@ -117,6 +130,7 @@ export default function Canvas() {
 
     return (
         <div>
+            {!isLoading ? (
             <div ref={containerRef} className="relative cursor-crosshair overflow-hidden h-screen">
                 <canvas 
                     ref={canvasRef}
@@ -131,15 +145,69 @@ export default function Canvas() {
                     style={{ touchAction: "none" }}
                     >
                 </canvas>
-                <div className = "grid grid-cols-3 w-full gap-4 py-4 px-4">
-                    <Button text={'Submit'} onClick={() => (window.location.href = '/load-page')}
-                    className="w-full h-full bg-white text-black rounded-lg" />
-                    <Button text={'Undo'} 
-                    className="w-full h-full bg-white text-black rounded-lg" />
-                    <Button text={'Clear'}
-                    className="w-full h-full bg-white text-black rounded-lg" />
+                <div className="flex min-h-screen flex-col">
+                    <div className = "mt-auto pb-2 relative z-10 grid grid-cols-3 gap-5 mx-auto ">
+                        <Button text={'Submit'} onClick={async () => {
+                            setLoading(true)
+                            calcVertices();
+                            await writeVertices();
+                            setLoading(false);
+                            }}/>
+                        <Button text={'Undo'}  />
+                        <Button text={'Clear'} />
+                    </div>
                 </div>
             </div>
+            ) : (
+                <main className="flex flex-col items-center justify-center gap-6 relative z-50">
+                {/* UIverse Loader */}
+                <div className="container">
+                <div className="moon">
+                    <div className="crater crater1"></div>
+                    <div className="crater crater2"></div>
+                    <div className="crater crater3"></div>
+                    <div className="crater crater4"></div>
+                    <div className="crater crater5"></div>
+                    <div className="shadow"></div>
+                    <div className="eye eye-l"></div>
+                    <div className="eye eye-r"></div>
+                    <div className="mouth"></div>
+                    <div className="blush blush1"></div>
+                    <div className="blush blush2"></div>
+                </div>
+
+                <div className="orbit">
+                    <div className="rocket">
+                    <div className="window"></div>
+                    <div className="fire"></div>
+                    <div className="gas"></div>
+                    <div className="gas"></div>
+                    <div className="gas"></div>
+                    <div className="gas"></div>
+                    <div className="gas"></div>
+                    <div className="gas"></div>
+                    <div className="gas"></div>
+                    </div>
+                </div>
+
+                <div className="curve">
+                    <svg viewBox="0 0 500 500">
+                    <path
+                        id="loading"
+                        d="M73.2,148.6c4-6.1,65.5-96.8,178.6-95.6c111.3,1.2,170.8,90.3,175.1,97"
+                    ></path>
+                    <text width="500">
+                        <textPath xlinkHref="#loading">...loading...</textPath>
+                    </text>
+                    </svg>
+                </div>
+                </div>
+
+                <h1 className="text-2xl font-semibold tracking-tight text-white">
+                Loading your constillations...
+                </h1>
+            </main>
+            )}
         </div>
     )
 }

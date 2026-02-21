@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, League_Script } from "next/font/google";
+import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,8 +12,8 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const leagueScript = League_Script({
-  variable: "--font-league-script",
+const playfairDisplay = Playfair_Display({
+  variable: "--font-playfair-display",
   subsets: ["latin"],
   weight: "400"
 })
@@ -31,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${leagueScript.className} ${leagueScript.className} antialiased`}
+        className={`${playfairDisplay.className} ${playfairDisplay.className} antialiased`}
       >
         {children}
       </body>
