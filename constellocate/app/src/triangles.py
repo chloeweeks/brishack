@@ -52,7 +52,7 @@ def generateTriangles(df, num_neighbours=10):
 
     return pd.DataFrame(triangles)
 
-    print(cluster)
+    # print(cluster)
 
 
 def searchTriangles(userVertices, starDb, starTriangleDb, ratioTolerance=0.01, physicalTolerance=0.1):
@@ -103,9 +103,8 @@ def searchTriangles(userVertices, starDb, starTriangleDb, ratioTolerance=0.01, p
             if len(anchorStarsCoords) != 3: continue
                 
             # see how much it takes to transform real points to user points
-            tform = SimilarityTransform()
             userAnchorPoints = np.array([p1, p2, p3])
-            tform.estimate(userAnchorPoints, anchorStarsCoords) 
+            tform = SimilarityTransform().from_estimate(userAnchorPoints, anchorStarsCoords) 
 
             #now apply that same transformation to every other drawn point, and see if they map to real stars in the map
             projection = tform(userPoints)
@@ -122,8 +121,8 @@ def searchTriangles(userVertices, starDb, starTriangleDb, ratioTolerance=0.01, p
 
                 if len(set(winningHIPS)) == numPoints:
                 
-                    print("Found a win!!!!")
-                    print(winningHIPS.tolist())
+                    # print("Found a win!!!!")
+                    # print(winningHIPS.tolist())
                     return winningHIPS.tolist()
                 
     return None

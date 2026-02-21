@@ -4,6 +4,7 @@ import Image from "next/image";
 import { StarfieldBackground } from "../src/components/star-background";
 import { Point } from "../src/lib/douglas-peucker";
 import { calcVertices } from "../src/lib/vertices";
+import { useState } from "react";
 
 async function writeVertices(vertices: Point[]) {
     const res = await fetch('/api/vertices', {
@@ -19,8 +20,20 @@ async function writeVertices(vertices: Point[]) {
 
 async function handleSubmit(points: Point[]) {
   const vertices = calcVertices(points);
-  console.log(vertices);
   writeVertices(vertices);
+  
+  const res = await fetch("/api/stars", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      vertices: vertices,
+    }),
+  });
+
+  const data = await res.json() as {star: string, pos: {x: number, y: number}}[];
+  console.log(data);
+
+  return data;
 }
 
 export default function Main() {
@@ -30,8 +43,9 @@ export default function Main() {
     
       {/* Left column */}
       {/* Right column split into 2 rows */}
-      <div className="grid grid-rows-[80%_20%] border-r border-white">
+      <div className="relative grid grid-rows-[80%_20%] border-r border-white">
         <StarfieldBackground/>
+        
         <Canvas onSubmit={handleSubmit}/>
       </div>
 

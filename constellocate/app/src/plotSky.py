@@ -1,3 +1,5 @@
+import os
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
@@ -6,7 +8,9 @@ import numpy as np
 def plotSky(inputCoords):
 
     # 1. Load your clean database
-    df = pd.read_csv('app_star_database.csv', skiprows=[1, 2])
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    raw_data_file = os.path.join(BASE_DIR, "app_star_database.csv")
+    df = pd.read_csv(raw_data_file, skiprows=[1, 2])
 
     df['HIP'] = pd.to_numeric(df['HIP'], errors='coerce')
     df['RAICRS'] = pd.to_numeric(df['RAICRS'], errors='coerce')
@@ -67,6 +71,6 @@ def plotSky(inputCoords):
 
     # Save it as an image file
     plt.savefig('constellation_map.png', bbox_inches='tight')
-    print("Successfully generated constellation map!")
+    # print("Successfully generated constellation map!")
 
     plt.show()

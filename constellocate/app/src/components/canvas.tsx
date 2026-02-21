@@ -1,9 +1,10 @@
 import Button from "@/app/components/ui/Button";
+import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Point } from "../lib/douglas-peucker";
 
 interface canvasProps {
-    onSubmit: (vertices: Point[]) => void
+    onSubmit: (vertices: Point[]) => Promise<{star: string, pos: {x: number, y: number}}[]>
 }
 
 export default function Canvas({ onSubmit } : canvasProps) {
@@ -15,6 +16,7 @@ export default function Canvas({ onSubmit } : canvasProps) {
     const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 })
     const [brushSize] = useState(3)
     const [isLoading, setLoading] = useState<boolean>(false);
+    const [constellation, setConstellation] = useState<{star: string, pos: {x: number, y: number}}[]>([]);
 
     useEffect(() => {
     const container = containerRef.current
@@ -133,7 +135,8 @@ export default function Canvas({ onSubmit } : canvasProps) {
                     <div className = "mt-auto pb-2 relative z-10 grid grid-cols-3 gap-5 mx-auto ">
                         <Button text={'Submit'} onClick={async () => {
                             setLoading(true);
-                            onSubmit(paths.flat());
+                            const stars = await onSubmit(paths.flat());
+                            setConstellation(stars);
                             setLoading(false);
                         }}/>
                         <Button text={'Undo'} onClick={() => {
@@ -195,6 +198,8 @@ export default function Canvas({ onSubmit } : canvasProps) {
                 Loading your constillations...
                 </h1>
             </main>
+                // <Image src={constellationMap} alt="Constellation Map" fill/>
+        
             )}
         </div>
     )
