@@ -23,7 +23,14 @@ export default function Home() {
   
         </h1>
 
-        {/* Left column */}
+
+        <div className = "grid grid-rows-3 h-full">
+          <div className="bg-gray-800">top row</div>
+          <div className="bg-gray-800">middle row</div>
+          <div className="bg-gray-800">bottom row</div>
+        </div>
+
+         {/* rectangle */}
         <div className="w-[80%] h-[70%] bg-white rounded-2xl flex flex-col text-black mx-auto">
           <h1 className = "text-2xl align-top font-bold text-black py-2 px-2">
           Star Name: 
@@ -37,8 +44,6 @@ export default function Home() {
             className = "my-2"
             />
             </div>
-
-       
 
            <h2 className = "text-2xl align-top font-bold text-black py-2 px-2">
           Mass: 
@@ -57,6 +62,7 @@ export default function Home() {
           </h2>
 
         </div>
+         {/* end of rectangle */}
       
       </div>
 
