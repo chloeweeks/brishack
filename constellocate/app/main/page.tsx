@@ -1,11 +1,29 @@
 'use client';
-import Button from "../components/ui/Button";
 import Canvas from "../src/components/canvas";
 import Image from "next/image";
 import { StarfieldBackground } from "../src/components/star-background";
+import { Point } from "../src/lib/douglas-peucker";
+import { calcVertices } from "../src/lib/vertices";
 
+async function writeVertices(vertices: Point[]) {
+    const res = await fetch('/api/vertices', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(vertices),
+    });
 
-export default function Home() {
+    if (!res.ok) {
+      console.log('Error');
+    }
+}
+
+async function handleSubmit(points: Point[]) {
+  const vertices = calcVertices(points);
+  console.log(vertices);
+  writeVertices(vertices);
+}
+
+export default function Main() {
   return (
    
     <div className="grid grid-cols-[70%_30%] h-screen bg-black">
@@ -14,7 +32,7 @@ export default function Home() {
       {/* Right column split into 2 rows */}
       <div className="grid grid-rows-[80%_20%] border-r border-white">
         <StarfieldBackground/>
-        <Canvas/>
+        <Canvas onSubmit={handleSubmit}/>
       </div>
 
       <div className="relative z-10 border-l border-white">
@@ -23,8 +41,15 @@ export default function Home() {
   
         </h1>
 
-        {/* Left column */}
-        <div className="w-80 h-140 bg-white rounded-2xl flex flex-col text-black mx-auto">
+
+        <div className = "grid grid-rows-3 h-full">
+          <div className="bg-gray-800">top row</div>
+          <div className="bg-gray-800">middle row</div>
+          <div className="bg-gray-800">bottom row</div>
+        </div>
+
+         {/* rectangle */}
+        <div className="w-[80%] h-[70%] bg-white rounded-2xl flex flex-col text-black mx-auto">
           <h1 className = "text-2xl align-top font-bold text-black py-2 px-2">
           Star Name: 
           </h1>
@@ -37,8 +62,6 @@ export default function Home() {
             className = "my-2"
             />
             </div>
-
-       
 
            <h2 className = "text-2xl align-top font-bold text-black py-2 px-2">
           Mass: 
@@ -57,6 +80,7 @@ export default function Home() {
           </h2>
 
         </div>
+         {/* end of rectangle */}
       
       </div>
 

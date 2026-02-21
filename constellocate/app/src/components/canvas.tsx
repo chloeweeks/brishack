@@ -1,36 +1,20 @@
 import Button from "@/app/components/ui/Button";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Point } from "../lib/douglas-peucker";
 
-export default function Canvas() {
+interface canvasProps {
+    onSubmit: (vertices: Point[]) => void
+}
+
+export default function Canvas({ onSubmit } : canvasProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const containerRef = useRef<HTMLDivElement>(null)
-    const [path, setPath] = useState<{x: number, y: number}[]>([]);
-    const [paths, setPaths] = useState<{x: number, y: number}[][]>([]);
+    const [path, setPath] = useState<Point[]>([]);
+    const [paths, setPaths] = useState<Point[][]>([]);
     const [isDrawing, setDrawing] = useState<boolean>(false);
-    const [vertices, setVertices] = useState<{x: number, y: number}[]>([]);
     const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 })
     const [brushSize] = useState(3)
     const [isLoading, setLoading] = useState<boolean>(false);
-
-    const calcVertices = () => {
-        for (let i: number = 0; i < paths.length; i++) {
-            for (let j: number = 0; j < paths[i].length; j += 10) {
-                setVertices((prev) => [...prev, paths[i][j]]);
-            }
-        }
-    }
-
-    const writeVertices = async () => {
-        const res = await fetch('/api/vertices', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(vertices),
-        });
-
-        if (!res.ok) {
-            console.log('Error');
-        }
-    }
 
     useEffect(() => {
     const container = containerRef.current
@@ -148,9 +132,8 @@ export default function Canvas() {
                 <div className="flex min-h-screen flex-col">
                     <div className = "mt-auto pb-2 relative z-10 grid grid-cols-3 gap-5 mx-auto ">
                         <Button text={'Submit'} onClick={async () => {
-                            setLoading(true)
-                            calcVertices();
-                            await writeVertices();
+                            setLoading(true);
+                            onSubmit(paths.flat());
                             setLoading(false);
                             }}/>
                         <Button text="Undo"
