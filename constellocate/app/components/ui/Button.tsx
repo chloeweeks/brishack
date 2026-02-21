@@ -12,7 +12,7 @@ interface ButtonProps {
 export default function Button({
   text,
   type,
-  className = 'mr-1 ml-1 rounded bg-white px-4 py-2 text-lg font-bold text-black cursor-pointer',
+  className = 'cursor-pointer whitespace-nowrap flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]',
   onClick,
 }: ButtonProps) {
   return (
