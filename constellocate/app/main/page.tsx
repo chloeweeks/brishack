@@ -1,20 +1,42 @@
 'use client';
-import Button from "../components/ui/Button";
 import Canvas from "../src/components/canvas";
 import Image from "next/image";
 import { StarfieldBackground } from "../src/components/star-background";
 import { useState } from "react";
+import { Point } from "../src/lib/douglas-peucker";
+import { calcVertices } from "../src/lib/vertices";
+import Button from "../components/ui/Button";
 
 export default function Home() {
   const [showButtons, setShowButtons] = useState(true);
+
+
+
+async function writeVertices(vertices: Point[]) {
+    const res = await fetch('/api/vertices', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(vertices),
+    });
+
+    if (!res.ok) {
+      console.log('Error');
+    }
+}
+
+async function handleSubmit(points: Point[]) {
+  const vertices = calcVertices(points);
+  console.log(vertices);
+  writeVertices(vertices);
+}
 
   return (
     <div className="grid grid-cols-[70%_30%] h-screen bg-black">
       
       {/* LEFT COLUMN */}
       <div className="grid grid-rows-[80%_20%] border-r border-white">
-        <StarfieldBackground />
-        <Canvas />
+        <StarfieldBackground/>
+        <Canvas onSubmit={handleSubmit}/>
       </div>
 
       {/* RIGHT COLUMN */}
@@ -82,4 +104,5 @@ export default function Home() {
       </div>
     </div>
   );
+
 }
