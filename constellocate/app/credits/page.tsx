@@ -11,7 +11,7 @@ export default function Credits() {
     <div className="flex min-h-screen items-center justify-center font-sans">
 
       <StarfieldBackground/>
-      <main className="relative z-10 flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-40 px-16">
+      <main className="relative z-10 flex min-h-screen w-full flex-col items-center justify-between py-40 px-16">
       <div className="absolute top-8 right-8 flex items-center gap-4 z-20">
                 <Button icon={House} size="sm" onClick={()=> (window.location.href = '/')}/>
                 <Button 

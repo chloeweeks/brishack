@@ -34,7 +34,7 @@ export default function Home() {
       <div className="relative flex h-[150vh] items-start justify-center font-sans overflow-x-hidden">
         <StarfieldBackground />
     
-        <main className="sticky top-0 z-10 flex h-screen w-full max-w-3xl flex-col items-center justify-between py-20 px-16">
+        <main className="sticky top-0 z-10 flex h-screen w-full flex-col items-center justify-between py-20 px-16">
           
           {/* Top Navigation Row */}
           <div className="absolute top-8 right-8 flex items-center gap-4">
