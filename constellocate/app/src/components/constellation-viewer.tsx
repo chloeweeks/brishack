@@ -1,8 +1,10 @@
+
 import { useEffect, useRef, useState } from "react";
 import { Point } from "../lib/douglas-peucker";
 import { starList } from "../data/stars";
 import Button from "@/app/components/ui/Button";
-import { useRouter } from "next/navigation";
+import { House } from 'lucide-react';
+
 
 interface ConstellationProps {
   stars: { hips: number[]; vertices: Point[]; data3D?: any[]; };

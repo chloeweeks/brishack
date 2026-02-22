@@ -3,6 +3,8 @@ import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Point } from "../lib/douglas-peucker";
 import Constellation from "./constellation-viewer";
+import { House } from 'lucide-react';
+import { motion } from "framer-motion";
 
 interface canvasProps {
     onSubmit: (vertices: Point[]) => Promise<{ hips: number[], vertices: Point[], data3D: any[] }>
@@ -22,9 +24,11 @@ export default function Canvas({ onSubmit }: canvasProps) {
 
 
     useEffect(() => {
-        const container = containerRef.current
-        const canvas = canvasRef.current
-        if (!container || !canvas) return
+    document.body.style.overflow = 'hidden';
+    document.body.style.touchAction = 'none';
+    const container = containerRef.current
+    const canvas = canvasRef.current
+    if (!container || !canvas) return
 
         const resizeObserver = new ResizeObserver((entries) => {
             for (const entry of entries) {
@@ -133,44 +137,58 @@ export default function Canvas({ onSubmit }: canvasProps) {
                         onTouchEnd={handleEnd}
                         style={{ touchAction: "none" }}
                     >
-                    </canvas>
-                    <div className="flex min-h-screen flex-col">
-                        <div className="mt-auto pb-2 relative z-10 grid grid-cols-4 gap-5 mx-auto ">
-                            <Button text={'Submit'} onClick={async () => {
-                                setLoading(true);
-                                const stars = await onSubmit(paths.flat());
-                                setConstellation(stars);
-                                setIsConstellation(true);
-                                setLoading(false);
-                            }} />
-
-                            <Button text="Undo"
-                                onClick={() => {
-                                    setPaths(prev => prev.slice(0, -1));
-                                }}
-                            />
-                            <Button text="Clear"
-                                onClick={() => {
-                                    const canvas = canvasRef.current;
-                                    if (!canvas) return;
+                </canvas>
+                <div className="flex min-h-screen flex-col">
+                <motion.div 
+                    initial={{ y: -50, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.2, duration: 0.8, ease: "easeOut" }}
+                    className="absolute top-8 right-8 flex items-center gap-4 z-20">
+                            <Button text={'Credits'} onClick={() => (window.location.href = '/credits')} size="sm"/>
+                            <Button icon={House} size="sm" onClick={()=> (window.location.href = '/')}/>     
+                </motion.div>
+                    {/* <div className = "mt-auto pb-2 relative z-10 grid grid-cols-3 gap-5 mx-auto "> */}
+                    <motion.div 
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.5, duration: 0.6, type: "spring", stiffness: 100 }}
+        className="fixed bottom-10 left-1/2 -translate-x-1/2 flex gap-4 z-20"
+      >
+                        <Button text={'Submit'} onClick={async () => {
+                            setLoading(true);
+                            const stars = await onSubmit(paths.flat());
+                            setConstellation(stars);
+                            setIsConstellation(true);
+                            setLoading(false);
+                        }} />
+                        
+                        <Button text="Undo"
+                        onClick={() => {
+                            setPaths(prev => prev.slice(0, -1));
+                        }}
+                        />
+                        <Button text="Clear"
+                            onClick={() => {
+                            const canvas = canvasRef.current;
+                            if (!canvas) return;
 
                                     const ctx = canvas.getContext("2d");
                                     if (!ctx) return;
 
-                                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                                    setPath([]);
-                                    setPaths([]);
-                                }}
-                            />
-                            <Button text={'Back'} onClick={() => (window.location.href = '/')} />
+                            ctx.clearRect(0, 0, canvas.width, canvas.height);
+                            setPath([]);
+                            setPaths([]);
+                        }}
+                        />
+                        
 
-                        </div>
-                    </div>
-
+                    </motion.div>
                 </div>
-
-
-            ) : (isLoading && !isConstellation ? (
+                  
+            </div>
+            
+            
+            ) : ( isLoading && !isConstellation ? (
                 <main className="flex flex-col items-center justify-center gap-50 relative x-100 z-50">
                     {/* UIverse Loader */}
                     {/* <div className="container">
