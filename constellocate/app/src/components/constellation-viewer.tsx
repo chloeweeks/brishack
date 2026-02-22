@@ -114,7 +114,7 @@ export default function Constellation({ stars }: ConstellationProps) {
 
       // Draw the Star Dot
       const baseSize = Math.max(3, 10 - starList[i].vmag);
-      const finalSize = baseSize * sizeMult;
+      const finalSize = baseSize * sizeMult * 1.5;
 
       ctx.beginPath();
       ctx.arc(x, y, finalSize, 0, Math.PI * 2);
