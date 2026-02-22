@@ -69,6 +69,40 @@ def searchTriangles(userVertices, starDb, starTriangleDb, ratioTolerance=0.01, p
     # convert user points
     userPoints = np.array(userVertices)
     numPoints = len(userPoints)
+
+    if numPoints < 3:
+        if numPoints == 2:
+            dx = abs(userVertices[0][0] - userVertices[1][0])
+            dy = abs(userVertices[0][1] - userVertices[1][1])
+            if dx == 0:
+                grad = 0
+            else:
+                grad = dy/dx
+            c = userVertices[0][1] - (userVertices[0][0] * grad)
+
+            if grad == 0:
+                totalY = sum([x[-1] for x in userVertices])
+                newUserVertices = userVertices.append((userVertices[0][0], totalY*2))
+            else:
+
+                newX = sum([x[0] for x in userVertices])
+                # print(newX, "newX")
+                respectiveY = (grad * newX) + c
+                # print(respectiveY, "respectiveY")
+                newUserVertices = userVertices.append((newX*2, respectiveY))
+            numPoints = 3
+        elif numPoints == 1:
+            return[{
+                    "hips": [11767],
+                    "averageVmag": 1.97
+                    }]
+        else:
+            print("AHHDFHASDIFJDKNERGKSDJAF")
+
+        userPoints = np.array(userVertices)
+        # if numPoints == 2:
+        # elif numPoints == 1:
+
     
     # get indices of the user data points
     pointIndices = list(range(numPoints))
@@ -83,7 +117,11 @@ def searchTriangles(userVertices, starDb, starTriangleDb, ratioTolerance=0.01, p
             break
         idx1, idx2, idx3 = combo
         p1, p2, p3 = userPoints[idx1], userPoints[idx2], userPoints[idx3]
+
+        area = 0.5 * abs(p1[0]*(p2[1] - p3[1]) + p2[0]*(p3[1] - p1[1]) + p3[0]*(p1[1] - p2[1]))
         
+        # if area < 1.0:
+        #     continue
         #lengths
         L1 = np.linalg.norm(p1 - p2)
         L2 = np.linalg.norm(p2 - p3)
@@ -142,7 +180,7 @@ def searchTriangles(userVertices, starDb, starTriangleDb, ratioTolerance=0.01, p
                             "averageVmag": vmag
                         })
 
-                        if len(foundMatches) > 100:
+                        if len(foundMatches) > 5:
                             breaking = True
                             break
                     # else: print("Found a duplicate")
@@ -156,3 +194,30 @@ def searchTriangles(userVertices, starDb, starTriangleDb, ratioTolerance=0.01, p
     # print(foundMatches[:topN])
 
     return foundMatches[:topN]
+
+
+def get3dWinners(winningHIPS, star_db):
+    stars = star_db[star_db['HIP'].isin(hip_ids)].copy()
+    stars['Plx'] = pd.to_numeric(stars['Plx'], errors='coerce').fillna(1.0)
+    stars.loc[stars['Plx'] <= 0, 'Plx'] = 1.0
+
+    stars['distance'] = 1000.0 / stars['Plx']
+
+    ra_rad = np.radians(stars['RAICRS'])
+    dec_rad = np.radians(stars['DEICRS'])
+
+    stars['x_3d'] = stars['distance'] * np.cos(dec_rad) * np.cos(ra_rad)
+    stars['y_3d'] = stars['distance'] * np.cos(dec_rad) * np.sin(ra_rad)
+    stars['z_3d'] = stars['distance'] * np.sin(dec_rad)
+
+    result = []
+    for _, row in stars.iterrows():
+        result.append({
+            'hip': int(row['HIP']),
+            'x': row['x_3d'],
+            'y': row['y_3d'],
+            'z': row['z_3d'],
+            'vmag': row['Vmag']
+        })
+        
+    return result
