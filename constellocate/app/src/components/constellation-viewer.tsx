@@ -175,8 +175,8 @@ export default function Constellation({ stars }: ConstellationProps) {
           onMouseLeave={() => setHoveredIndex(null)}
           className="absolute inset-0 w-full h-full z-10"
         />
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20">
-          <div className="mt-auto pb-2 relative z-10 grid grid-cols-3 gap-5 mx-auto">
+        <div className="absolute bottom-10 left-0 right-0 flex justify-center z-20">
+          <div className="mt-auto pb-2 relative z-10 grid grid-cols-3 gap-5 mx-auto">            
             <Button
               text={'Draw Again!'}
               onClick={() => (window.location.href = '/draw')}
