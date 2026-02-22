@@ -25,11 +25,11 @@ export default function Credits() {
              Creators 
           </h1>
         <div className="flex gap-4 items-center justify-center">
-            <img src="katie.jpeg" className="w-40 h-auto"></img>
-            <img src="jake.jpeg" className="w-40 h-auto"></img>
-            <img src="chloe.jpeg" className="w-40 h-auto"></img>
-            <img src="max.jpeg" className="w-40 h-40"></img>
-            <img src="ritika.jpeg" className="w-40 h-auto"></img>
+            <a href="https://www.linkedin.com/in/katie-young-b8b647269/"><img src="katie.jpeg" className="w-200 h-auto"></img></a>
+            <a href="https://www.linkedin.com/in/jake-snee-606610301/"><img src="jake.jpeg" className="w-200 h-auto"></img></a>
+            <a href="https://www.linkedin.com/in/chloe-weeksuob/"><img src="chloe.jpeg" className="w-200 h-auto"></img></a>
+            <a href="https://www.linkedin.com/in/max-dv/" className="w-200 h-auto"><img src="max.jpg"></img></a>
+            <a href="https://www.linkedin.com/in/ritika-c-8843b2240/"><img src="ritika.jpeg" className="w-200 h-auto"></img></a>
         </div>
         </div>
         <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
