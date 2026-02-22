@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Point } from "../lib/douglas-peucker";
+import Button from "@/app/components/ui/Button";
 
 interface ConstellationProps {
   stars: { hips: number[]; vertices: Point[] };
@@ -95,6 +96,7 @@ export default function Constellation({ stars }: ConstellationProps) {
   };
 
   return (
+    <main>
     <div className="relative cursor-crosshair overflow-hidden h-screen">
       <canvas
         ref={canvasRef}
@@ -102,6 +104,15 @@ export default function Constellation({ stars }: ConstellationProps) {
         onMouseLeave={() => setHoveredIndex(null)}
         className="absolute inset-0 w-full h-full z-10"
       />
+    <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20">
+      <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
+        <Button 
+          text={'Draw Again!'} 
+          onClick={() => (window.location.href = '/main')} 
+        />
+      </div>
     </div>
+    </div>
+    </main>
   );
 }
