@@ -19,7 +19,7 @@ stars2d = pd.read_csv("2D_app_star_database.csv")
 print("Read data")
 
 
-userVertices = [(0, 0), (0, 5), (2, 5), (2.5, 3.5), (3, 5), (5, 5), (5, 0), (4, 0), (4, 3), (2.5, 1.5), (1, 3), (1, 0)]
+userVertices = [(2, 0)]
 print("Finding Data")
 
 foundStars = searchTriangles(userVertices, stars2d, starTriangles)
