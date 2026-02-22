@@ -12,9 +12,10 @@ def parse_hipparcos(file_path):
     star_db = star_db.dropna()
     
     # if want to make only for visible stars:
-    # visible_stars = star_db[star_db['Vmag'] <= 6.0]
+    star_db['Vmag'] = pd.to_numeric(star_db['Vmag'], errors='coerce')
+    visibleStars = star_db[star_db['Vmag'] <= 6.0]
     
-    return star_db
+    return visibleStars
 
 
 def project_stars_to_2d(ra_star, dec_star, ra_center, dec_center):
