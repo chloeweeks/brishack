@@ -360,7 +360,7 @@ body {
 
 .star {
   opacity: 0;
-  fill: #f2f3f4;
+  fill: #ffffff;
   animation: loader 2s infinite alternate;
 }
 
@@ -381,7 +381,7 @@ body {
 @keyframes loader {
   0% {
     opacity: 0;
-    transform: translateY(0) translateX(50px) rotate (0deg);
+    transform: translateY(0) translateX(50px) rotate(0deg);
   }
   10% {
     opacity: 0;
