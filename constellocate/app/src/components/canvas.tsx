@@ -3,6 +3,8 @@ import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Point } from "../lib/douglas-peucker";
 import Constellation from "./constellation-viewer";
+import { House } from 'lucide-react';
+import { motion } from "framer-motion";
 
 interface canvasProps {
     onSubmit: (vertices: Point[]) => Promise<{hips: number[], vertices: Point[]}>
@@ -22,6 +24,8 @@ export default function Canvas({ onSubmit } : canvasProps) {
 
 
     useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    document.body.style.touchAction = 'none';
     const container = containerRef.current
     const canvas = canvasRef.current
     if (!container || !canvas) return
@@ -135,7 +139,21 @@ export default function Canvas({ onSubmit } : canvasProps) {
                     >
                 </canvas>
                 <div className="flex min-h-screen flex-col">
-                    <div className = "mt-auto pb-2 relative z-10 grid grid-cols-4 gap-5 mx-auto ">
+                <motion.div 
+                    initial={{ y: -50, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.2, duration: 0.8, ease: "easeOut" }}
+                    className="absolute top-8 right-8 flex items-center gap-4 z-20">
+                            <Button text={'Credits'} onClick={() => (window.location.href = '/credits')} size="sm"/>
+                            <Button icon={House} size="sm" onClick={()=> (window.location.href = '/')}/>     
+                </motion.div>
+                    {/* <div className = "mt-auto pb-2 relative z-10 grid grid-cols-3 gap-5 mx-auto "> */}
+                    <motion.div 
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.5, duration: 0.6, type: "spring", stiffness: 100 }}
+        className="fixed bottom-10 left-1/2 -translate-x-1/2 flex gap-4 z-20"
+      >
                         <Button text={'Submit'} onClick={async () => {
                             setLoading(true);
                             const stars = await onSubmit(paths.flat());
@@ -143,7 +161,7 @@ export default function Canvas({ onSubmit } : canvasProps) {
                             setIsConstellation(true);
                             setLoading(false);
                         }} />
-                    
+                        
                         <Button text="Undo"
                         onClick={() => {
                             setPaths(prev => prev.slice(0, -1));
@@ -162,9 +180,9 @@ export default function Canvas({ onSubmit } : canvasProps) {
                             setPaths([]);
                         }}
                         />
-                        <Button text={'Back'} onClick={() => (window.location.href = '/')} />
+                        
 
-                    </div>
+                    </motion.div>
                 </div>
                   
             </div>

@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { Point } from "../lib/douglas-peucker";
 import { starList } from "../data/stars";
 import Button from "@/app/components/ui/Button";
+import { House } from 'lucide-react';
+
 
 interface ConstellationProps {
   stars: { hips: number[]; vertices: Point[] };
@@ -168,6 +170,16 @@ export default function Constellation({ stars }: ConstellationProps) {
       </div>
     </div>
     </div>
+    <div className="absolute top-8 right-8 flex items-center gap-4 z-20">
+              <Button text={'Credits'} onClick={() => (window.location.href = '/credits')} size="sm"/>
+                <Button 
+            text={'?'} 
+            size="sm" 
+            className="!w-10 !h-10 !p-0 flex items-center justify-center rounded-full" 
+            onClick={() => (window.location.href = '/help')} 
+            />
+            <Button icon={House} size="sm" onClick={()=> (window.location.href = '/')}/>
+          </div>
     </main>
   );
 }

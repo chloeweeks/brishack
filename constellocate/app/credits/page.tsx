@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Button from "../components/ui/Button";
 import { StarfieldBackground } from "../src/components/star-background";
+import { House } from 'lucide-react';
 
 export default function Credits() {
   return (
@@ -10,7 +11,15 @@ export default function Credits() {
 
       <StarfieldBackground/>
       <main className="relative z-10 flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-40 px-16">
-        
+      <div className="absolute top-8 right-8 flex items-center gap-4 z-20">
+                <Button icon={House} size="sm" onClick={()=> (window.location.href = '/')}/>
+                <Button 
+                                text={'?'} 
+                                size="sm" 
+                                className="!w-10 !h-10 !p-0 flex items-center justify-center rounded-full" 
+                                onClick={() =>(window.location.href = '/help')} 
+                              />
+            </div>
         <div className="flex flex-col items-center gap-6 text-center">
           <h1 className="items-center text-4xl font-semibold leading-10 tracking-tight text-white">
              Creators 
@@ -25,7 +34,6 @@ export default function Credits() {
         </div>
         <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
     
-         <Button text={'Back'} onClick={() => (window.location.href = '/')} />
         </div>
       </main>
     </div>
