@@ -242,7 +242,7 @@ export default function Canvas({ onSubmit }: canvasProps) {
                 </div> */}
 
                     {/* <!-- From Uiverse.io by LightAndy1 -->  */}
-                    <div className="loader mt-20">
+                    <div className="loader mt-40">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="32"
