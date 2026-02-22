@@ -110,7 +110,8 @@ def searchTriangles(userVertices, starDb, starTriangleDb, ratioTolerance=0.01, p
                 
             # see how much it takes to transform real points to user points
             userAnchorPoints = np.array([p1, p2, p3])
-            tform = SimilarityTransform().from_estimate(userAnchorPoints, anchorStarsCoords) 
+            tform = SimilarityTransform()
+            tform.estimate(userAnchorPoints, anchorStarsCoords) 
 
             #now apply that same transformation to every other drawn point, and see if they map to real stars in the map
             projection = tform(userPoints)

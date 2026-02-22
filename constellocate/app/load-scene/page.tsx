@@ -7,9 +7,17 @@ export default function Home() {
     >
       <StarfieldBackground />
 
-      <main className="flex flex-col items-center justify-center gap-6 relative z-50">
+      <main className="flex flex-col items-center justify-center gap-300 relative z-50">
         {/* UIverse Loader */}
-        <div className="container">
+        <div className="preloader">
+          <div className="crack crack1"></div>
+          <div className="crack crack2"></div>
+          <div className="crack crack3"></div>
+          <div className="crack crack4"></div>
+          <div className="crack crack5"></div>
+        </div>
+
+        {/* <div className="container">
           <div className="moon">
             <div className="crater crater1"></div>
             <div className="crater crater2"></div>
@@ -49,10 +57,10 @@ export default function Home() {
               </text>
             </svg>
           </div>
-        </div>
+        </div> */}
 
         <h1 className="text-2xl font-semibold tracking-tight text-white">
-          Loading your constillations...
+          Loading your constellation...
         </h1>
       </main>
     </div>
