@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { Point } from "../lib/douglas-peucker";
 import { starList } from "../data/stars";
 import Button from "@/app/components/ui/Button";
+import { useRouter } from "next/navigation";
 
 interface ConstellationProps {
-  stars: { hips: number[]; vertices: Point[] };
+  stars: { hips: number[]; vertices: Point[]; data3D?: any[]; };
 }
 
 const SPECTRAL_COLORS: Record<string, string> = {
@@ -36,7 +37,7 @@ const SPECTRAL_STRING: Record<string, string> = {
 };
 
 const LUMINOSITY_STRING: Record<string, string> = {
-  I: "Supergiant",  
+  I: "Supergiant",
   II: "Bright Giant",
   III: "Giant",
   IV: "Subgiant",
@@ -53,8 +54,21 @@ function convertSpType(spType: string, firstLetter: string, roman: string) {
 }
 
 export default function Constellation({ stars }: ConstellationProps) {
+
+  console.log("Data inside viewer:", stars);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  const handleGoTo3D = () => {
+    if (stars.data3D) {
+      // 1. Save the attached 3D data to memory
+      sessionStorage.setItem('constellationData', JSON.stringify(stars.data3D));
+      // 2. Teleport to the map page
+      window.location.href = '/map';
+    } else {
+      alert("3D data is not available for this shape!");
+    }
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -89,7 +103,7 @@ export default function Constellation({ stars }: ConstellationProps) {
       const roman = match ? match[0] : "V";
       const firstLetter = starList[i].spType.charAt(0).toUpperCase();
       const colourString = SPECTRAL_STRING[firstLetter] || "White";
-      const { colour, sizeMult} = convertSpType(starList[i].spType, firstLetter, roman);
+      const { colour, sizeMult } = convertSpType(starList[i].spType, firstLetter, roman);
 
       const v = stars.vertices[i];
       const x = v.x * rect.width;
@@ -152,22 +166,26 @@ export default function Constellation({ stars }: ConstellationProps) {
 
   return (
     <main>
-    <div className="relative cursor-crosshair overflow-hidden h-screen">
-      <canvas
-        ref={canvasRef}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={() => setHoveredIndex(null)}
-        className="absolute inset-0 w-full h-full z-10"
-      />
-    <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20">
-      <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-        <Button 
-          text={'Draw Again!'} 
-          onClick={() => (window.location.href = '/draw')} 
+      <div className="relative cursor-crosshair overflow-hidden h-screen">
+        <canvas
+          ref={canvasRef}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={() => setHoveredIndex(null)}
+          className="absolute inset-0 w-full h-full z-10"
         />
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20">
+          <div className="mt-auto pb-2 relative z-10 grid grid-cols-3 gap-5 mx-auto">
+            <Button
+              text={'Draw Again!'}
+              onClick={() => (window.location.href = '/draw')}
+            />
+            <Button
+              text={'View in 3D'}
+              onClick={handleGoTo3D}
+            />
+          </div>
+        </div>
       </div>
-    </div>
-    </div>
     </main>
   );
 }

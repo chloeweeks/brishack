@@ -7,6 +7,7 @@ import pandas as pd
 
 from generateTriangles import generate
 from triangles import searchTriangles
+from triangles import get3dWinners
 from plotSky import plotSky
 
 # # generateChoice = input("Would you like to generate the files? Y for yes, nothing for No")
@@ -91,15 +92,19 @@ def starSearch(userVertices, tolerance = 0.005):
 
     foundStars = searchTriangles(userVertices, stars2d, starTriangles)
 
-    if foundStars:
+    # if foundStars:
 
-        for i, match in enumerate(foundStars):
-            hips_to_plot = match['hips']
-            vmag = match['averageVmag']
+    #     for i, match in enumerate(foundStars):
+    #         hips_to_plot = match['hips']
+    #         vmag = match['averageVmag']
             
-            # print(f"Match {i+1}: Brightness = {vmag:.2f}")
+    #         # print(f"Match {i+1}: Brightness = {vmag:.2f}")
 
-            plotSky(hips_to_plot)
+    #         plotSky(hips_to_plot)
+    for match in foundStars:
+        winningHIPS = match["hips"]
+        match["data3D"] = get3dWinners(winningHIPS, stars2d)
+
 
     return foundStars
 
@@ -109,4 +114,5 @@ if __name__ == "__main__":
     tolerance = input.get("tolerance", 0.005)
     vertices = input.get("vertices")
     result = starSearch(vertices, 0.005)
+    
     print(json.dumps(result))
