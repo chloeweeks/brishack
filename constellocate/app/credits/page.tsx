@@ -17,7 +17,7 @@ export default function Credits() {
                 <Button 
                                 text={'?'} 
                                 size="sm" 
-                                className="!w-10 !h-10 !p-0 flex items-center justify-center rounded-full" 
+                                className="!w-10 !h-8 !p-0 flex items-center justify-center rounded-full" 
                                 onClick={() =>(window.location.href = '/help')} 
                               />
             </div>
