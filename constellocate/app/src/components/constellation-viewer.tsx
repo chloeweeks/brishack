@@ -187,6 +187,14 @@ export default function Constellation({ stars }: ConstellationProps) {
             />
           </div>
         </div>
+         <div className="absolute top-8 right-8 flex items-center gap-4 z-20">
+                <Button 
+                  icon={House}
+                  size="sm" 
+                  className="!w-10 !h-10 !p-0 flex items-center justify-center rounded-full" 
+                  onClick={() => (window.location.href='/')} 
+                />
+              </div>
       </div>
     </main>
   );
