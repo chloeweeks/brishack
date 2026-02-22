@@ -163,7 +163,7 @@ export default function Constellation({ stars }: ConstellationProps) {
       <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
         <Button 
           text={'Draw Again!'} 
-          onClick={() => (window.location.href = '/main')} 
+          onClick={() => (window.location.href = '/draw')} 
         />
       </div>
     </div>
