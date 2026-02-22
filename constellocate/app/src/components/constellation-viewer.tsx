@@ -90,8 +90,8 @@ export default function Constellation({ stars }: ConstellationProps) {
 
     // Draw Connection Path
     ctx.beginPath();
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.15)";
-    ctx.lineWidth = 1;
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.78)";
+    ctx.lineWidth = 3;
     for (let i = 0; i < count; i++) {
       const x = stars.vertices[i].x * rect.width;
       const y = stars.vertices[i].y * rect.height;
@@ -114,7 +114,7 @@ export default function Constellation({ stars }: ConstellationProps) {
 
       // Draw the Star Dot
       const baseSize = Math.max(3, 10 - starList[i].vmag);
-      const finalSize = baseSize * sizeMult;
+      const finalSize = baseSize * sizeMult * 1.5;
 
       ctx.beginPath();
       ctx.arc(x, y, finalSize, 0, Math.PI * 2);
@@ -123,7 +123,7 @@ export default function Constellation({ stars }: ConstellationProps) {
 
       // Draw Information if hovered
       if (isHovered) {
-        ctx.font = "bold 12px sans-serif";
+        ctx.font = "bold 16px sans-serif";
         ctx.fillStyle = "#fff";
         ctx.textAlign = "center";
         ctx.fillText(`HIP: ${stars.hips[i]}`, x, y - 15);
