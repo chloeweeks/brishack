@@ -22,7 +22,7 @@ export default function Home() {
         </div>
         <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
     
-         <Button text={'Find Your Match'} onClick={() => (window.location.href = '/main')} />
+         <Button text={'Start Drawing'} onClick={() => (window.location.href = '/main')} />
          <Button text={'Need Help?'} onClick={() => (window.location.href = '/help')} />
          <Button text={'Credits'} onClick={() => (window.location.href = '/credits')} />
         </div>
