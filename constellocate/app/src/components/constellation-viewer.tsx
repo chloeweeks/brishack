@@ -90,7 +90,7 @@ export default function Constellation({ stars }: ConstellationProps) {
 
     // Draw Connection Path
     ctx.beginPath();
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.78)";
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.15)";
     ctx.lineWidth = 3;
     for (let i = 0; i < count; i++) {
       const x = stars.vertices[i].x * rect.width;
