@@ -11,51 +11,51 @@ export default function Home() {
 
 
 
-async function writeVertices(vertices: Point[]) {
+  async function writeVertices(vertices: Point[]) {
     const res = await fetch('/api/vertices', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(vertices),
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(vertices),
     });
 
     if (!res.ok) {
       console.log('Error');
     }
-}
+  }
 
-async function handleSubmit(points: Point[]) {
-  const vertices = calcVertices(points);
-  writeVertices(vertices);
-  
-  const res = await fetch("/api/stars", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      vertices: vertices,
-    }),
-  });
+  async function handleSubmit(points: Point[]) {
+    const vertices = calcVertices(points);
+    writeVertices(vertices);
 
-  const data = await res.json() as {hips: number[], averageVmag: number}[];
-  console.log(data);
+    const res = await fetch("/api/stars", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        vertices: vertices,
+      }),
+    });
 
-  return { hips: data[0].hips, vertices: vertices };
-}
+    const data = await res.json() as { hips: number[], averageVmag: number, data3D: any[] }[];
+    console.log(data);
+
+    return { hips: data[0].hips, vertices: vertices, data3D: data[0].data3D };
+  }
 
   return (
     /*splitting into two rows */
     <div className="h-screen bg-black">
-    
+
       {/* Left column */}
       {/* Right column split into 2 rows */}
       <div className="relative border-r border-white">
-        <StarfieldBackground/>
-        
-        <Canvas onSubmit={handleSubmit}/>
+        <StarfieldBackground />
+
+        <Canvas onSubmit={handleSubmit} />
       </div>
 
-        <div className="h-screen w-full p-4 align-center justify-center ">
-        </div>
+      <div className="h-screen w-full p-4 align-center justify-center ">
       </div>
+    </div>
   );
 
 }

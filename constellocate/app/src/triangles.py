@@ -202,7 +202,7 @@ def searchTriangles(userVertices, starDb, starTriangleDb, ratioTolerance=0.01, p
 
 
 def get3dWinners(winningHIPS, star_db):
-    stars = star_db[star_db['HIP'].isin(hip_ids)].copy()
+    stars = star_db[star_db['HIP'].isin(winningHIPS)].copy()
     stars['Plx'] = pd.to_numeric(stars['Plx'], errors='coerce').fillna(1.0)
     stars.loc[stars['Plx'] <= 0, 'Plx'] = 1.0
 
