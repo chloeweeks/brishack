@@ -297,3 +297,98 @@ body {
   fill: #95d5ff;
   filter: drop-shadow(0 2px 8px rgb(21, 117, 207));
 }
+
+
+/* From Uiverse.io by narmesh_sah */ 
+.preloader {
+  position: relative;
+  width: 80%;
+  height: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 2px #fff);
+}
+
+.crack {
+  position: absolute;
+  width: 10%;
+  aspect-ratio: 1;
+  background-color: #fef3fc;
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+  animation: rotate 6s infinite;
+}
+
+.crack2 {
+  width: 12%;
+  animation-delay: 1s;
+}
+.crack3 {
+  width: 14%;
+  animation-delay: 1.5s;
+}
+.crack4 {
+  width: 16%;
+  animation-delay: 2s;
+}
+.crack5 {
+  width: 18%;
+  animation-delay: 2.5s;
+}
+
+@keyframes rotate {
+  to {
+    rotate: 360deg;
+  }
+}
+
+/* From Uiverse.io by LightAndy1 */ 
+.loader {
+  user-select: none;
+}
+
+.star {
+  opacity: 0;
+  fill: #ffffff;
+  animation: loader 2s infinite alternate;
+}
+
+.star2 {
+  height:60px;
+  width: 60px;
+  margin-left: -10px;
+  animation-delay: 0.25s;
+}
+
+.star3 {
+  height: 50px;
+  width: 50px;
+  margin-left: -15px;
+  animation-delay: 0.5s;
+}
+
+@keyframes loader {
+  0% {
+    opacity: 0;
+    transform: translateY(0) translateX(50px) rotate(0deg);
+  }
+  10% {
+    opacity: 0;
+    transform: translateY(0) translateX(50px) rotate(0deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-20px) translateX(0) rotate(360deg);
+  }
+}
