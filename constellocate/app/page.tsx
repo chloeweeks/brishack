@@ -30,7 +30,7 @@ export default function Home() {
         </div>
         <div className="flex flex-col gap-4 text-base font-medium sm:flex-row scale-80">
     
-         <Button text={'Start Drawing'} onClick={() => (window.location.href = '/main')} size="lg"/>
+         <Button text={'Start Drawing'} onClick={() => (window.location.href = '/draw')} size="lg"/>
          
   
         </div>
