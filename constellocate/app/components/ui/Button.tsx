@@ -1,35 +1,12 @@
-// 'use client'
-
-// import React, { LinkHTMLAttributes } from 'react';
-
-// interface ButtonProps {
-//   text: string;
-//   type?: 'button' | 'submit' | 'reset';
-//   className?: string;
-//   onClick?: () => void;
-// }
-
-// export default function Button({
-//   text,
-//   type,
-//   className = 'font-semibold cursor-pointer whitespace-nowrap text-black flex h-12 w-full items-center justify-center gap-2 rounded-full px-5 text-background transition-colors hover:bg-gray-300 md:w-[158px] bg-white hover:shadow-[0_0_35px_rgba(99,102,241,1)]',
-//   onClick,
-// }: ButtonProps) {
-//   return (
-//     <div>
-//       <button type={type} className={className} onClick={onClick}>
-//         {text}
-//       </button>
-//     </div>
-//   );
-// }
 
 'use client'
 
 import React from 'react';
+import { LucideIcon } from 'lucide-react';
 
 interface ButtonProps {
-  text: string;
+  text?: string;
+  icon?: LucideIcon;
   type?: 'button' | 'submit' | 'reset';
   className?: string; // For extra custom classes (like margins)
   size?: 'sm' | 'md' | 'lg';  // The new size toggle
@@ -38,6 +15,7 @@ interface ButtonProps {
 
 export default function Button({
   text,
+  icon: Icon,
   type = 'button',
   className = '',
   size = 'md', // Default to medium
@@ -61,7 +39,8 @@ export default function Button({
         className={`${baseStyles} ${sizeStyles[size]} ${className}`} 
         onClick={onClick}
       >
-        {text}
+        {Icon && <Icon size={size === 'sm' ? 16 : 20} />} 
+        {text && <span>{text}</span>}
       </button>
     </div>
   );

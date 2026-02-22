@@ -1,32 +1,66 @@
+
 'use client';
 
 import Image from "next/image";
 import Button from "../components/ui/Button";
 import { StarfieldBackground } from "../src/components/star-background";
+import { House } from 'lucide-react';
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Home() {
-  return (
-    <div className="flex min-h-screen items-center justify-center font-sans">
-
-      <StarfieldBackground/>
-      <main className="relative z-10 flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-40 px-16">
-        
-        <div className="flex flex-col items-center gap-6 text-center">
-          <h1 className="items-center text-4xl font-semibold leading-10 tracking-tight text-white">
-             Instructions 
-          </h1>
-          <ul className="max-w-md text-lg leading-8 text-zinc-300 font-semibold">
-            <li>Draw an image on the canvas</li>
-            <li>Submit your image</li>
-            <li>See the stars that make up your constellation!</li>
-          </ul>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
+  const router = useRouter();
+  
+    useEffect(() => {
+      const handleScroll = () => {
+        const scrollAmount = window.scrollY
+        // If the user scrolls down even a little bit (more than 10px)
+        if (scrollAmount > 2) {
+          router.push('/draw');
+        }
+  
+        if (scrollAmount > 10) {
+          window.scrollTo(0, 10);
+        }
+      };
+  
+      window.addEventListener("scroll", handleScroll);
+  
+      // Cleanup listener on unmount
+      return () => window.removeEventListener("scroll", handleScroll);
+    }, [router]);
+  
+    return (
+      <div className="relative flex h-[150vh] items-start justify-center font-sans overflow-x-hidden">
+        <StarfieldBackground />
     
-         <Button text={'Find Your Match'} onClick={() => (window.location.href = '/draw')} />
-         <Button text={'Back'} onClick={() => (window.location.href = '/')} />
-        </div>
-      </main>
-    </div>
-  );
+        <main className="sticky top-0 z-10 flex h-screen w-full max-w-3xl flex-col items-center justify-between py-20 px-16">
+          
+          {/* Top Navigation Row */}
+          <div className="absolute top-8 right-8 flex items-center gap-4">
+            <Button text={'Credits'} onClick={() => router.push('/credits')} size="sm"/>
+            <Button icon={House} size="sm" onClick={()=> (window.location.href = '/')}/>
+          </div>
+    
+          {/* Instructions Section (Centered) */}
+          <div className="flex flex-1 flex-col items-center justify-center gap-8 text-center">
+            <h1 className="text-5xl font-bold tracking-tight text-white">
+               Instructions 
+            </h1>
+            
+            <ul className="max-w-md space-y-4 text-left text-xl leading-relaxed text-zinc-300 font-medium list-disc list-inside">
+              <li>Draw an image on the canvas</li>
+              <li>Submit your image</li>
+              <li>See the stars that make up your constellation!</li>
+            </ul>
+          </div>
+    
+          {/* Bottom Hint */}
+          <div className="flex flex-col items-center gap-4 mb-10">
+            <p className="text-zinc-500 text-sm animate-bounce">↓ Scroll down to start drawing</p>
+          </div>
+    
+        </main>
+      </div>
+    );
 }
